@@ -1,3 +1,10 @@
 {
-  "extends": "./tsconfig.base"
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "@zart/app/*": ["./packages/app/*"]
+    }
+  },
+  "extends": "expo/tsconfig.base"
 }

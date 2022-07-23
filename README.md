@@ -1,87 +1,88 @@
-# zART-Stack 🤯
+# Blank Solito Example Monorepo 🕴
 
-> **Z**ero-**A**PI, **R**eact, & **T**ypeScript
+```sh
+npx create-solito-app@latest my-solito-app
+```
 
-**⚡️ Probably the fastest way to build a React Native app with your own backend ⚡️**
+👾 [View the website](https://example.solito.dev)
 
-## Introduction
+## ⚡️ Instantly clone & deploy
 
-A monorepo containing:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnandorojo%2Fsolito%2Ftree%2Fmaster%2Fexample-monorepos%2Fblank&env=ENABLE_ROOT_PATH_BUILD_CACHE&root-directory=apps/next&envDescription=Set%20this%20environment%20variable%20to%201%20for%20Turborepo%20to%20cache%20your%20node_modules.&envLink=https%3A%2F%2Ftwitter.com%2Fjaredpalmer%2Fstatus%2F1488954563533189124&project-name=solito-app&repo-name=solito-app&demo-title=Solito%20App%20%E2%9A%A1%EF%B8%8F&demo-description=React%20Native%20%2B%20Next.js%20starter%20with%20Solito.%20Made%20by%20Fernando%20Rojo.&demo-url=https%3A%2F%2Fsolito.dev%2Fstarter&demo-image=https%3A%2F%2Fsolito.dev%2Fimg%2Fog.png)
 
-- Next.js web app
-- React Native app with Expo
-- A [tRPC](https://trpc.io)-API which is inferred straight into the above.
-- [Prisma](http://prisma.io/) as a typesafe ORM
+## 🔦 About
 
-> In tRPC you simply write API-functions that are automatically inferred straight into your frontend - no matter if it's React, React Native, or something else _(that is TS/JS-based)_.
+This monorepo is a blank(ish) starter for an Expo + Next.js app.
 
-### Video
+While it's pretty barebones, it does a lot of the annoying config for you. The folder structure is opinionated, based on my long experience building for this stack.
 
-> Very rough video recorded in 2 minutes 😅
+## 📦 Included packages
 
-[![ZART](http://img.youtube.com/vi/dLLm6hgMhMQ/0.jpg)](http://www.youtube.com/watch?v=dLLm6hgMhMQ "Video Title")
+- `solito` for cross-platform navigation
+- `moti` for animations
+- `dripsy` for theming/design (you can bring your own, too)
+- Expo SDK 44
+- Next.js 12
+- React Navigation 6
 
-## Requirements
+## 🗂 Folder layout
 
-You will need docker compose to run the postgres database.
-It comes with the [Docker Desktop App](https://docs.docker.com/get-docker/)
+- `apps` entry points for each app
 
-## Getting started
+  - `expo`
+  - `next`
 
-```bash
-git clone git@github.com:KATT/zart.git
-cd zart
+- `packages` shared packages across apps
+  - `app` you'll be importing most files from `app/`
+    - `features` (don't use a `screens` folder. organize by feature.)
+    - `provider` (all the providers that wrap the app, and some no-ops for Web.)
+    - `navigation` Next.js has a `pages/` folder. React Native doesn't. This folder contains navigation-related code for RN. You may use it for any navigation code, such as custom links.
+
+You can add other folders inside of `packages/` if you know what you're doing and have a good reason to.
+
+## 🏁 Start the app
+
+- Install dependencies: `yarn`
+
+- Next.js local dev: `yarn web`
+  - Runs `yarn next`
+- Expo local dev: `yarn native`
+  - Runs `expo start`
+
+## 🆕 Add new dependencies
+
+### Pure JS dependencies
+
+If you're installing a JavaScript-only dependency that will be used across platforms, install it in `packages/app`:
+
+```sh
+cd packages/app
+yarn add date-fns
+cd ../..
 yarn
-yarn dev
 ```
 
-> Press `i` after `yarn dev` in to launch the iOS Simulator.
+### Native dependencies
 
-Now - head over to one of the [`./apps`](./apps), whilist updating [a router in tRPC](./packages/api/src/routers) or the [Database Schema](./prisma/schema.prisma) and see that the data is directly inferred.
+If you're installing a library with any native code, you must install it in `apps/expo`:
 
-## Available commands
+```sh
+cd apps/expo
+yarn add react-native-reanimated
 
-| Command               | Description                                                                                    |
-| --------------------- | ---------------------------------------------------------------------------------------------- |
-| `yarn dev`            | Starts Postgres, Expo & Next.js                                                                |
-| `yarn db-up`          | Starts Postgres on port `5466`                                                                 |
-| `yarn db-migrate-dev` | Runs the latest Database migrations after updating the [Prisma schema](./prisma/schema.prisma) |
-| `yarn db-nuke`        | Stops and deletes the the database                                                             |
-
-
-## Folder structure
-
-
-```graphql
-.
-├── apps
-│   ├── expo    # Expo/RN application
-│   └── nextjs  # Server-side rendered Next.js application
-├── packages
-│   ├── api           # tRPC API 
-│   ├── react         # Shared React-helpers
-│   └── react-native  # RN components. **Could** be shared between Expo & Next.js if you're in to that sort of thing.
-└── prisma      # Prisma setup
+cd ../..
+yarn
 ```
 
-## Further reading
+You can also install the native library inside of `packages/app` if you want to get autoimport for that package inside of the `app` folder. However, you need to be careful and install the _exact_ same version in both packages. If the versions mismatch at all, you'll potentially get terrible bugs. This is a classic monorepo issue. I use `lerna-update-wizard` to help with this (you don't need to use Lerna to use that lib).
 
-### Deployment
+## 🎙 About the creator
 
-#### Vercel
+Follow Fernando Rojo on Twitter: [@FernandoTheRojo](https://twitter.com/fernandotherojo)
 
-- Create a Postgres Database
-- Set env `DATABASE_URL` pointing towards that db
-- Configure *"Root Directory"* as `apps/nextjs` and tick _Include source files outside of the Root Directory in the Build Step_.
+## 🧐 Why use Expo + Next.js?
 
+See my talk about this topic at Next.js Conf 2021:
 
-### Questions?
-
-Shoot me a message [on Twitter](https://twitter.com/alexdotjs)!
-
-
-## Credits
-
-- tRPC and this example is made by [@alexdotjs](https://twitter.com/alexdotjs)
-- `apps/expo` is basically a copy-paste from [`expo-next-monorepo-example`](https://github.com/axeldelafosse/expo-next-monorepo-example) by [axeldelafosse](https://github.com/axeldelafosse).
-
+<a href="https://www.youtube.com/watch?v=0lnbdRweJtA"><img width="1332" alt="image" src="https://user-images.githubusercontent.com/13172299/157299915-b633e083-f271-48c6-a262-7b7eef765be5.png">
+</a>

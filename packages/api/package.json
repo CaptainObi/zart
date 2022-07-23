@@ -1,13 +1,15 @@
 {
   "name": "@zart/api",
-  "version": "0.0.1",
-  "author": "KATT",
-  "license": "MIT",
-  "private": true,
+  "version": "0.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@prisma/client": "^4.1.0",
+    "@trpc/next": "^10.0.0-alpha.38",
+    "@trpc/server": "^10.0.0-alpha.38",
+    "superjson": "^1.9.1",
+    "zod": "^3.17.9"
+  },
   "files": [
     "src"
-  ],
-  "scripts": {},
-  "dependencies": {},
-  "devDependencies": {}
+  ]
 }
