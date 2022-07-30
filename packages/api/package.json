@@ -4,8 +4,8 @@
   "main": "index.ts",
   "dependencies": {
     "@prisma/client": "^4.1.0",
-    "@trpc/next": "^10.0.0-alpha.38",
-    "@trpc/server": "^10.0.0-alpha.38",
+    "@trpc/next": "^10.0.0-alpha.41",
+    "@trpc/server": "^10.0.0-alpha.41",
     "superjson": "^1.9.1",
     "zod": "^3.17.9"
   },

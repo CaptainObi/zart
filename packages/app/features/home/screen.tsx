@@ -1,32 +1,29 @@
-import { trpc } from '@zart/app/utils/trpc'
+import { proxy, trpc } from '../../utils/trpc'
+import { FlatList, View, Text, Pressable } from 'dripsy'
 import React from 'react'
-import {
-  SafeAreaView,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native'
-
-import { FlatList } from 'react-native'
-
 export function HomeScreen() {
-  const posts = trpc.useQuery(['post.all'])
+  const posts = proxy.post.all.useQuery()
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View sx={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       {posts.data ? (
         <FlatList
           renderItem={({ item }) => (
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 alert(`You clicked ID ${item.id} `)
               }}
             >
-              <View style={styles.item}>
+              <View
+                sx={{
+                  flex: 1,
+                  backgroundColor: '#f9c2ff',
+                  padding: 20,
+                }}
+              >
                 <Text>{item.title}</Text>
               </View>
-            </TouchableOpacity>
+            </Pressable>
           )}
           data={posts.data}
           keyExtractor={(item) => item.id}
@@ -34,18 +31,6 @@ export function HomeScreen() {
       ) : (
         <Text>{posts.status}</Text>
       )}
-    </SafeAreaView>
+    </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  item: {
-    flex: 1,
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-  },
-})
